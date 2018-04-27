@@ -2,9 +2,23 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OpenWeatherMobile.App">
-	<Application.Resources>
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#4e4d4a</Color>
+            <Color x:Key="PrimaryDark">#353432</Color>
+            <Color x:Key="Accent">#d26c22</Color>
+            <Color x:Key="LightBackgroundColor">#FAFAFA</Color>
+            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
 
-		<!-- Application resource dictionary -->
-
-	</Application.Resources>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+            <Style x:Key="horizontalLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Accent}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

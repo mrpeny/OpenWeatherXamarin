@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OpenWeatherMobile.ViewModels"
+             x:Class="OpenWeatherMobile.MainPage"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <local:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Search" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand" Padding="16,16,16,16">
+            <Label x:Name="instructionLabel" Text="{Binding Instruction}" Style="{StaticResource horizontalLabelStyle}" />
+            <Entry x:Name="cityNameEntry"  Placeholder="City name" />
+            <Label x:Name="currentTemperatureLabel" Text="{Binding Temperature}" Style="{StaticResource horizontalLabelStyle}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -13,8 +13,9 @@ namespace OpenWeatherMobile
 		{
 			InitializeComponent();
 
-			MainPage = new OpenWeatherMobile.MainPage();
-		}
+			MainPage = new NavigationPage(new OpenWeatherMobile.MainPage());
+            
+        }
 
 		protected override void OnStart ()
 		{
