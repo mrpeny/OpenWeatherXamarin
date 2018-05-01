@@ -18,6 +18,9 @@
             </Style>
             <Style x:Key="horizontalLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource Accent}" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

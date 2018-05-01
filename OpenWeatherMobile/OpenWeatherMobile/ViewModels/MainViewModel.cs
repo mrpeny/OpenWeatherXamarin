@@ -8,7 +8,6 @@ namespace OpenWeatherMobile.ViewModels
 {
     class MainViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        public string Instruction { get; set;  } = "Enter city name to search current temperature for!";
         public string CityName { get; set; }
         private String responseText;
    
@@ -18,7 +17,9 @@ namespace OpenWeatherMobile.ViewModels
         {
             Title = "Weather Service";       
             SearchCommand = new Command<string>((key) => ShowTemperatureIn(CityName));
+            DetailsCommand = new Command<string>((key) => Device.OpenUri(new Uri("https://openweathermap.org/find?q=" + CityName)));
             openWeatherRequestService = new OpenWeatherRequestService(new OpenWeatherNetworkUtils(), new OpenWeatherJsonParser());
+            ResponseText = "Enter city to search current temperature for!";
         }
 
         public String ResponseText
@@ -43,6 +44,8 @@ namespace OpenWeatherMobile.ViewModels
 
         public ICommand SearchCommand { protected set; get; }
 
+        public ICommand DetailsCommand { protected set; get; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         async void ShowTemperatureIn(String city)
@@ -53,7 +56,7 @@ namespace OpenWeatherMobile.ViewModels
                 return;
             }
             double temperature = await openWeatherRequestService.getTemperatureByCity(city);
-            ResponseText = BuildResponseText(city, temperature);
+            ResponseText = BuildResponseText(city, temperature);            
         }
 
         private String BuildResponseText(String cityName, Double temperature)
