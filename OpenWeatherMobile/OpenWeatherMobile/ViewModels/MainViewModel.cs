@@ -1,48 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OpenWeatherMobile.Services;
+using System;
 using System.ComponentModel;
-using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace OpenWeatherMobile.ViewModels
 {
     class MainViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        double temperature;
         public string Instruction { get; set;  } = "Enter city name to search current temperature for!";
+        public string CityName { get; set; }
+        private String responseText;
+   
+        OpenWeatherRequestService openWeatherRequestService;
 
         public MainViewModel()
         {
-            Title = "Weather Service";
-            
+            Title = "Weather Service";       
+            SearchCommand = new Command<string>((key) => ShowTemperatureIn(CityName));
+            openWeatherRequestService = new OpenWeatherRequestService(new OpenWeatherNetworkUtils(), new OpenWeatherJsonParser());
         }
 
-        public MainViewModel(double temperature)
-        {
-            this.temperature = temperature;
-        }
-
-        public double Temperature
+        public String ResponseText
         {
             set
             {
-                if (temperature != value)
+                if(responseText != value)
                 {
-                    temperature = value;
+                    responseText = value;
 
                     if (PropertyChanged != null)
                     {
-                        PropertyChanged(this, new PropertyChangedEventArgs("temperature"));
+                        PropertyChanged(this, new PropertyChangedEventArgs("ResponseText"));
                     }
                 }
             }
             get
             {
-                return temperature;
+                return responseText;
             }
         }
 
+        public ICommand SearchCommand { protected set; get; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
+        async void ShowTemperatureIn(String city)
+        {
+            if(String.IsNullOrEmpty(city))
+            {
+                ResponseText = "Please enter a city name!";
+                return;
+            }
+            double temperature = await openWeatherRequestService.getTemperatureByCity(city);
+            ResponseText = BuildResponseText(city, temperature);
+        }
 
+        private String BuildResponseText(String cityName, Double temperature)
+        {
+            String message = null;
+            if (double.IsNaN(temperature))
+            {
+                message = "Error occured. Make sure you entered correct city name!";
+            }
+            else
+            {
+                message = "Temperature in " + cityName + " is " + Math.Round(temperature) + " °C";
+            }
+
+            return message;
+        }
     }
 }

@@ -1,13 +1,8 @@
-﻿using OpenWeatherMobile.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.Serialization.Json;
 using System.IO;
 
 namespace OpenWeatherMobile.Services
@@ -33,7 +28,6 @@ namespace OpenWeatherMobile.Services
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");   
             string uriString = BASE_API_URI_OWM + "?" + PARAM_KEY_CITY + "=" + city + "&" + PARAM_KEY_UNITS + "=" + PARAM_VALUE_UNITS +
                 "&" + PARAM_KEY_APP_ID + "=" + PARAM_VALUE_APP_ID;
 

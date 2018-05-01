@@ -12,12 +12,6 @@ namespace OpenWeatherMobile
 		public MainPage()
 		{
 			InitializeComponent();
-            if(currentTemperatureLabel.Text.Equals("0"))
-            {
-                currentTemperatureLabel.IsVisible = false;
-            }
-
-
         }
     }
 }

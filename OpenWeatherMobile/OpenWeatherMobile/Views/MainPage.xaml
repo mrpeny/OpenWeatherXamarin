@@ -9,13 +9,14 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Search" />
+        <ToolbarItem Text="Search"
+                     Command="{Binding SearchCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand" Padding="16,16,16,16">
             <Label x:Name="instructionLabel" Text="{Binding Instruction}" Style="{StaticResource horizontalLabelStyle}" />
-            <Entry x:Name="cityNameEntry"  Placeholder="City name" />
-            <Label x:Name="currentTemperatureLabel" Text="{Binding Temperature}" Style="{StaticResource horizontalLabelStyle}" />
+            <Entry x:Name="cityNameEntry"  Placeholder="City name" Text="{Binding CityName, Mode=OneWayToSource}"/>
+            <Label x:Name="responseTextLabel" Text="{Binding ResponseText}" Style="{StaticResource horizontalLabelStyle}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
