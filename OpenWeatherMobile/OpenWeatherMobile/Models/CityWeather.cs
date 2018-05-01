@@ -17,6 +17,6 @@ namespace OpenWeatherMobile.Models
         [DataMember(Name = "name")]
         public string Name { get; set; }
         [DataMember(Name = "main")]
-        public MainWeather mainWeather { get; set; }
+        public MainWeather MainWeather { get; set; }
     }
 }
