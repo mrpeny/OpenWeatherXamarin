@@ -10,15 +10,14 @@ namespace OpenWeatherMobile.ViewModels
     {
         public string CityName { get; set; }
         private String responseText;
-   
-        OpenWeatherRequestService openWeatherRequestService;
+
+        public IWeatherRequestService OpenWeatherRequestService => DependencyService.Get<IWeatherRequestService>();
 
         public MainViewModel()
         {
             Title = "Weather Service";       
             SearchCommand = new Command<string>((key) => ShowTemperatureIn(CityName));
             DetailsCommand = new Command<string>((key) => Device.OpenUri(new Uri("https://openweathermap.org/find?q=" + CityName)));
-            openWeatherRequestService = new OpenWeatherRequestService(new OpenWeatherNetworkUtils(), new OpenWeatherJsonParser());
             ResponseText = "Enter city to search current temperature for!";
         }
 
@@ -55,7 +54,7 @@ namespace OpenWeatherMobile.ViewModels
                 ResponseText = "Please enter a city name!";
                 return;
             }
-            double temperature = await openWeatherRequestService.getTemperatureByCity(city);
+            double temperature = await OpenWeatherRequestService.getTemperatureByCity(city);
             ResponseText = BuildResponseText(city, temperature);            
         }
 

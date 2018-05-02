@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: Xamarin.Forms.Dependency(typeof(OpenWeatherMobile.Services.OpenWeatherRequestService))]
 namespace OpenWeatherMobile.Services
 {
     class OpenWeatherRequestService : IWeatherRequestService
     {
         private const int COD_OK = 200;
 
-        private OpenWeatherNetworkUtils openWeatherNetworkUtils;
-        private OpenWeatherJsonParser openWeatherJsonParser;
+        private readonly OpenWeatherNetworkUtils openWeatherNetworkUtils;
+        private readonly OpenWeatherJsonParser openWeatherJsonParser;
 
-        public OpenWeatherRequestService(OpenWeatherNetworkUtils networkUtils, OpenWeatherJsonParser jsonParser)
+        public OpenWeatherRequestService()
         {
-            this.openWeatherNetworkUtils = networkUtils;
-            this.openWeatherJsonParser = jsonParser;
+            this.openWeatherNetworkUtils = new OpenWeatherNetworkUtils();
+            this.openWeatherJsonParser = new OpenWeatherJsonParser();
         }
 
         async public Task<Double> getTemperatureByCity(string cityName)
