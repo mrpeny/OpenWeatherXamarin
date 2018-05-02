@@ -8,19 +8,24 @@ namespace OpenWeatherMobile.ViewModels
 {
     class MainViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        public string CityName { get; set; }
-        private String responseText;
+        private readonly string PROPERTY_RESPONSE_TEXT = "ResponseText";
 
+        public string CityName { get; set; }
+        public string Details { get; set; }        
+        
         public IWeatherRequestService OpenWeatherRequestService => DependencyService.Get<IWeatherRequestService>();
 
         public MainViewModel()
         {
-            Title = "Weather Service";       
+            Title = Resources.AppResources.Title;
+            Details = Resources.AppResources.Details;
+            ResponseText = Resources.AppResources.InitialMessage;
+
             SearchCommand = new Command<string>((key) => ShowTemperatureIn(CityName));
-            DetailsCommand = new Command<string>((key) => Device.OpenUri(new Uri("https://openweathermap.org/find?q=" + CityName)));
-            ResponseText = "Enter city to search current temperature for!";
+            DetailsCommand = new Command<string>((key) => Device.OpenUri(new Uri("https://openweathermap.org/find?q=" + CityName)));            
         }
 
+        private String responseText;
         public String ResponseText
         {
             set
@@ -31,7 +36,7 @@ namespace OpenWeatherMobile.ViewModels
 
                     if (PropertyChanged != null)
                     {
-                        PropertyChanged(this, new PropertyChangedEventArgs("ResponseText"));
+                        PropertyChanged(this, new PropertyChangedEventArgs(PROPERTY_RESPONSE_TEXT));
                     }
                 }
             }
@@ -51,7 +56,7 @@ namespace OpenWeatherMobile.ViewModels
         {
             if(String.IsNullOrEmpty(city))
             {
-                ResponseText = "Please enter a city name!";
+                ResponseText = Resources.AppResources.EnterCityName;
                 return;
             }
             double temperature = await OpenWeatherRequestService.getTemperatureByCity(city);
@@ -63,11 +68,11 @@ namespace OpenWeatherMobile.ViewModels
             String message = null;
             if (double.IsNaN(temperature))
             {
-                message = "Error occured. Make sure you entered correct city name!";
+                message = Resources.AppResources.ErrorWrongCity;
             }
             else
             {
-                message = "Temperature in " + cityName + " is " + Math.Round(temperature) + " °C";
+                message = String.Format(Resources.AppResources.ResultTemperatureText, cityName, Math.Round(temperature));
             }
 
             return message;
